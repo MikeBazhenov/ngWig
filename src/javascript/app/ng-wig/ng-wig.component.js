@@ -16,6 +16,7 @@ angular.module('ngWig')
     controller: function($scope, $element, $q, $attrs, $window, $document, ngWigToolbar) {
 
       var $container = angular.element($element[0].querySelector('#ng-wig-editable'));
+      $attrs.$set('tabindex', 0);
 
       //TODO: clean-up this attrs solution
       this.required = 'required' in $attrs;
@@ -81,6 +82,14 @@ angular.module('ngWig')
           this.ngModelController.$setViewValue($container.html());
           $scope.$applyAsync();
         });
+
+        $element.on('focus', function (e) {
+
+          e.preventDefault();
+          e.stopPropagation();
+
+          $container[0].focus();
+        })
       };
 
       $container.on('paste', (event) => {
